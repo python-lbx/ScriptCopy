@@ -12,6 +12,13 @@ public class InventoryManager : MonoBehaviour
     public Text itemInfo;
     public List<GameObject> slots = new List<GameObject>();
 
+    public int _isfull;
+
+    public GameObject[] objPrefab;
+
+    public bool isfull;
+
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -29,6 +36,22 @@ public class InventoryManager : MonoBehaviour
         for(int i = 0 ; i<instance.myBag.ItemList.Count ; i++)
         {   
             instance.myBag.ItemList[i] = null;
+        }
+    }
+
+    private void Update() 
+    {
+        for(int i = 0; i < instance.myBag.ItemList.Count ; i++)
+        {
+            if(instance.myBag.ItemList[i] == null)
+            {
+                isfull = false;
+                break;
+            }
+            else if(instance.myBag.ItemList[i] != null)
+            {
+                isfull = true;
+            }
         }
     }
     private void OnEnable() 

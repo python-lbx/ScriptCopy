@@ -6,39 +6,54 @@ public class ItemOnWorld : MonoBehaviour
 {
     public Item thisItem;
     public InventoryList playerInventory;
+    
+
+    bool here;
 
     // Start is called before the first frame update
-    void Start()
+    private void Update() 
     {
-        
-    }
+        if(here && Input.GetKeyDown(KeyCode.Q))
+        {
+            if(FindObjectOfType<InventoryManager>().isfull)
+            {
+                FindObjectOfType<InventoryManager>().itemInfo.text = "背包滿了";
+            }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+            AddNewItem();
 
-    private void OnTriggerEnter2D(Collider2D other) 
+        }
+    }
+    private void OnTriggerStay2D(Collider2D other) 
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            AddNewItem();
-            Destroy(this.gameObject);
+            //print(other.gameObject.name);
+            here = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            //print(other.gameObject.name);
+            here = false;
+        }    
     }
 
     public void AddNewItem()
     {
-        if(!playerInventory.ItemList.Contains(thisItem))
+        //避免重覆
+        /*if(!playerInventory.ItemList.Contains(thisItem)){}*/ 
+        
+        for(int i = 0 ; i < playerInventory.ItemList.Count ; i++)
         {
-            for(int i = 0 ; i < playerInventory.ItemList.Count ; i++)
+            if(playerInventory.ItemList[i] == null)
             {
-                if(playerInventory.ItemList[i] == null)
-                {
-                    playerInventory.ItemList[i] = thisItem;
-                    break;
-                }
+                playerInventory.ItemList[i] = thisItem;
+                Destroy(this.gameObject);
+                break;
             }
         }
 

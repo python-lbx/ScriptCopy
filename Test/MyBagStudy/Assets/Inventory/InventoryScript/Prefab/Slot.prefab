@@ -343,6 +343,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   originalParent: {fileID: 0}
   mybag: {fileID: 11400000, guid: 96247d6dc7aa579479bc28c8874ba08e, type: 2}
+  ObjPrefab: {fileID: 6265343236329388735, guid: b1c136b11661b1c40830c1a097b1ef17, type: 3}
   currentItemID: 0
 --- !u!114 &4217466286099159265
 MonoBehaviour:

@@ -7,27 +7,53 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
 {
     public Transform originalParent;
     public InventoryList mybag;
+    public string Itemname;
     public int currentItemID;
+    public GameObject player;
 
+    InventoryManager inventory;
+    int ItemofWhichNo;
+
+    private void Start() 
+    {   
+        inventory = FindObjectOfType<InventoryManager>();
+        player = GameObject.Find("Player");
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         originalParent = transform.parent;
+        Itemname = originalParent.GetComponent<Slot>().slotName;
         currentItemID = originalParent.GetComponent<Slot>().slotID;
         transform.SetParent(transform.parent.parent);
         transform.position = eventData.position;
 
+
+        //print(Itemname);
         GetComponent<CanvasGroup>().blocksRaycasts = false;
     }
 
     public void OnDrag(PointerEventData eventData)
     {
         transform.position = eventData.position;
-        Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
+        print(Itemname);   
+
+        for(int i = 0;i<inventory.objPrefab.Length;i++)
+        {
+            if(inventory.objPrefab[i].name == Itemname)
+            {
+                ItemofWhichNo = i;
+                print(ItemofWhichNo);
+                print(i);
+            }
+        }
+
+        //Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {   
         var obj = eventData.pointerCurrentRaycast.gameObject;
+        Vector2 newpos = new Vector2(player.transform.position.x + 2.5f,player.transform.position.y);
 
             if(obj.name == "ItemImage" && obj != null)
             {
@@ -43,7 +69,7 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
                 return;
             }
 
-            if(obj.name == "Slot(Clone)" && obj != null)
+            else if(obj.name == "Slot(Clone)" && obj != null)
             {
                 transform.SetParent(obj.transform);
                 transform.position = obj.transform.position;
@@ -58,11 +84,25 @@ public class ItemOnDrag : MonoBehaviour,IBeginDragHandler,IDragHandler,IEndDragH
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
                 return;
             }
+
+            else if(obj.name == "BagBG")
+            {
+                mybag.ItemList[currentItemID] = null;
+
+                Instantiate(inventory.objPrefab[ItemofWhichNo],newpos,Quaternion.identity);
+                inventory.itemInfo.text = "";
+
+                GetComponent<CanvasGroup>().blocksRaycasts = true;
+                InventoryManager.RefreshItem();
+                return;
+            }
             else
             {
                 transform.SetParent(originalParent);
                 transform.position = originalParent.position;
                 GetComponent<CanvasGroup>().blocksRaycasts = true;
             }
+        
+        
     }
 }
