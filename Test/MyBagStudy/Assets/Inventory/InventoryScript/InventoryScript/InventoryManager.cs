@@ -46,9 +46,9 @@ public class InventoryManager : MonoBehaviour
             if(instance.myBag.ItemList[i] == null)
             {
                 isfull = false;
-                break;
+                break; //只要有空物件就停止遞增
             }
-            else if(instance.myBag.ItemList[i] != null)
+            else if(instance.myBag.ItemList[i] != null) //都不為空物件則顯示已滿
             {
                 isfull = true;
             }
