@@ -30,7 +30,7 @@ public class SwordScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         Point = GameObject.FindObjectOfType<Controller>();
         Target = GameObject.Find("Player");
-        transform.position = Point.transform.position;
+        //transform.position = Point.transform.position;
         startpos = new Vector3(transform.position.x,5.5f,transform.position.z);
 
         rnum = Random.Range(154,206);
@@ -49,15 +49,15 @@ public class SwordScript : MonoBehaviour
     void Update()
     {
         //瞄準
-        //Vector2 targetpos = Target.transform.position;
+        Vector2 targetpos = Target.transform.position;
 
-        //Direction = targetpos - (Vector2)transform.position;
+        Direction = targetpos - (Vector2)transform.position;
         
         if(focustime > 0)
         {
             focustime -= Time.deltaTime;
 
-            //transform.up = Direction;
+            transform.up = Direction;
         
         }
         else
