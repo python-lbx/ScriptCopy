@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Magic_Circle
+  - Magic_Ball
   layers:
   - Default
   - TransparentFX
