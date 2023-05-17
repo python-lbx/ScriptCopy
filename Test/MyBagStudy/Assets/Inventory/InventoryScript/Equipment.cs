@@ -4,25 +4,31 @@ using UnityEngine;
 
 public class Equipment : MonoBehaviour
 {
-    public float num;
-
+    public GameObject[] _temp;
+    public bool isfull;
     // Start is called before the first frame update
     void Start()
     {
-        double a = num;
-        print(a);
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        for(int i = 0 ; i < _temp.Length ; i++)
+        {
+                    print(i);
 
-    }
-    static int addition(int a)
-    {
-        int add = a+a;
+            if(_temp[i] == null)
+            {   
+                isfull = false;
+                break;
+            }
+            else if(_temp[i] != null)
+            {
+                isfull = true;
+            }
 
-        
-        return add;
+        }
     }
 }
