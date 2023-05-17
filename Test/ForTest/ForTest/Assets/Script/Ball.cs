@@ -6,7 +6,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour
 {
     Collider2D coll;
-    public SpriteRenderer SR;
+    //public SpriteRenderer SR;
 
     //public Color Tough_color;
     //public Color Not_Tough_color;
@@ -27,7 +27,7 @@ public class Ball : MonoBehaviour
     void Start()
     {
         coll = GetComponent<Collider2D>();
-        SR = GetComponent<SpriteRenderer>();
+        //SR = GetComponent<SpriteRenderer>();
         touchable = true;
         //last_button_time = -button_cd_time;
     }
